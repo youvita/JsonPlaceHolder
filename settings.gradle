@@ -1,0 +1,4 @@
+include ':applibrarymodule'
+include ':appsourcemodule'
+include ':app'
+rootProject.name = "JsonPlaceHolder"

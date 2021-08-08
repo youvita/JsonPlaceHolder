@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- app -->
+
+    <!-- comment -->
+    <string name="comment_email">电子邮件</string>
+    <string name="comment_body">评论</string>
+
+    <!-- login -->
+    <string name="user_email">电子邮件</string>
+    <string name="user_password">密码</string>
+    <string name="user_login">登录</string>
+    <string name="forget_password">忘记密码</string>
+
+    <!-- description -->
+    <string name="desc_logo">email image for login</string>
+    <string name="desc_email">email image for login</string>
+    <string name="desc_password">password image for login</string>
+
+    <!-- language -->
+    <string name="choose_language">选择语言</string>
+    <string name="english_language" translatable="false">English</string>
+    <string name="chinese_language" translatable="false">中文</string>
+
+</resources>

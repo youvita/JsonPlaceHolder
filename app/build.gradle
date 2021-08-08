@@ -1,0 +1,128 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    signingConfigs {
+
+        debug {
+
+        }
+
+        release {
+
+        }
+    }
+
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        applicationId "com.json.placeholder"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled = "true"
+            debuggable = true
+        }
+        release {
+            debuggable false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+
+        develop {
+            signingConfig signingConfigs.debug
+            applicationIdSuffix = ".develop"    // show up package app log development when run app
+            versionCode 1
+            versionName "1.0"
+
+            resValue "string", "app_name", "Holder Dev"
+
+            buildConfigField "String", "BASE_URL", "\"https://jsonplaceholder.typicode.com\""
+        }
+
+        production {
+            signingConfig signingConfigs.release
+            applicationIdSuffix = ".release"    // show up package app log release when run app
+            versionCode 1
+            versionName "1.0"
+
+            resValue "string", "app_name", "Holder Pro"
+
+            buildConfigField "String", "BASE_URL", "\"https://api.instantwebtools.net\""
+        }
+
+    }
+}
+
+dependencies {
+
+    // module
+    implementation project(path: ':appsourcemodule')
+    implementation project(path: ':applibrarymodule')
+
+    // support
+    implementation deps.kotlin.stdlib
+    implementation deps.core_ktx
+    implementation deps.appcompat
+    implementation deps.material
+    implementation deps.rxjava2
+    implementation deps.paging_ktx
+    implementation deps.constraintlayout
+    implementation deps.support.activity_ktx
+    implementation deps.support.fragment_ktx
+
+    // injection
+    implementation deps.dagger.android
+    kapt deps.dagger.compiler
+
+    // retrofit
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.converter_gson
+    implementation deps.okhttp.okhttp3_interceptor
+    implementation deps.okhttp.okhttp3
+
+    // coroutine
+    implementation deps.coroutine.core
+    implementation deps.coroutine.android
+
+    // lifecycle
+    implementation deps.lifecycle.extensions
+    implementation deps.lifecycle.viewmodel_ktx
+    implementation deps.lifecycle.livedata_ktx
+    implementation deps.lifecycle.java8
+    kapt deps.lifecycle.compiler
+
+    def room = "2.3.0"
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-ktx:$room"
+    kapt "androidx.room:room-compiler:$room"
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
