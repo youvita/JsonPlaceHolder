@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.json.placeholder.R
+import com.json.placeholder.data.CommentsItem
 import com.json.placeholder.databinding.ActivityMainBinding
 import com.json.placeholder.ui.base.BaseActivity
 import com.json.placeholder.ui.adapter.CommentAdapter
@@ -17,6 +18,7 @@ import com.source.module.rxjava.RxJava
 import dagger.Component
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 import javax.inject.Inject
 
@@ -35,10 +37,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        getCommentList()
+        getCommentList()
 
         commentDisposable = RxJava.listen(RxEvent.CommentSuccess::class.java).subscribe {
             Log.d(">>>>","Result::: ${it.value}")
@@ -48,21 +51,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     /**
      * get comments
      */
+    @ExperimentalCoroutinesApi
     private fun getCommentList() {
         binding.rvComment.adapter = commentAdapter
-        viewModel.getComments()
-        viewModel.dataPassenger.observe(this) {
-        }
+//        viewModel.getComments()
 
-        binding.commentsItem = viewModel.comments
-        viewModel.comments.observe(this) {
-            if (it.data.isNullOrEmpty()) return@observe
-            Log.d(">>>>", "result:: ${viewModel.comments.value?.status}")
-            if (it is Resource.Success) {
-                commentAdapter.addItemList(it.data)
+//        binding.viewModel = viewModel
+//        viewModel.comments.observe(this) {
+//            if (it.data.isNullOrEmpty()) return@observe
+//            Log.d(">>>>", "result:: ${viewModel.comments.value?.status}")
+//            if (it is Resource.Success) {
+//                commentAdapter.addItemList(it.data)
+//                binding.itemCount = commentAdapter.itemCount
+//                viewModel.cancelRequests()
+//            }
+//        }
+
+        viewModel.comments.observe(this@MainActivity) { comments ->
+//            if (comments is Resource.Success) {
+                commentAdapter.submitList(comments.data as MutableList<CommentsItem>?)
                 binding.itemCount = commentAdapter.itemCount
                 viewModel.cancelRequests()
-            }
+//            }
         }
     }
 
@@ -70,12 +80,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onDestroy()
         commentDisposable?.dispose()
         commentDisposable = null
-
-        commentAdapter.clearItemList()
     }
 
+    @ExperimentalCoroutinesApi
     override fun onResume() {
         super.onResume()
+
         getCommentList()
 
         if (commentAdapter.itemCount < 0) {

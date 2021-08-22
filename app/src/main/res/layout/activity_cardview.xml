@@ -8,6 +8,16 @@
         android:layout_height="match_parent"
         android:background="@color/colorGray808080">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginEnd="21dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/rvHotel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHotel"
             style="@style/recyclerViewStyle"
@@ -16,7 +26,8 @@
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
             android:orientation="horizontal"
-            android:padding="4dp"
+            android:paddingStart="17.5dp"
+            android:paddingEnd="17.5dp"
             app:layoutManager="com.source.module.custom.PeekingLinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

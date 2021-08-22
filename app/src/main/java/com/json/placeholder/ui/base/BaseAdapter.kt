@@ -4,7 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.source.module.app.AppExecutors
 
 /**
  *
@@ -14,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView
  * @since 2021.04.24
  *
  */
-abstract class BaseAdapter<B: ViewDataBinding, T ,VH: RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
-
-    /** handle items list */
-    private var items = ArrayList<T>()
+abstract class BaseAdapter<B: ViewDataBinding, T ,VH: RecyclerView.ViewHolder>(
+        appExecutors: AppExecutors,
+        diffCallback: DiffUtil.ItemCallback<T>
+) : ListAdapter<T, VH>(
+        AsyncDifferConfig.Builder<T>(diffCallback)
+        .setBackgroundThreadExecutor(appExecutors.diskIO())
+        .build()) {
 
     /** handle item binding */
     lateinit var binding: B
@@ -38,27 +45,7 @@ abstract class BaseAdapter<B: ViewDataBinding, T ,VH: RecyclerView.ViewHolder> :
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        setBindData(holder, items[position], position)
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    /**
-     * add all items to array list view
-     * @param data items list
-     */
-    open fun addItemList(data: List<T>?) {
-        if (data == null) return
-        items.clear()
-        items.addAll(data)
-        this.notifyItemInserted(itemCount)
-    }
-
-    open fun clearItemList() {
-        items.clear()
-        this.notifyDataSetChanged()
+        setBindData(holder, getItem(position), position)
     }
 
 }

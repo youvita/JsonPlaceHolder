@@ -15,10 +15,6 @@
         <import type="com.json.placeholder.data.CommentsItem" />
 
         <variable
-            name="viewModel"
-            type="com.json.placeholder.data.CommentsItem" />
-
-        <variable
             name="commentsItem"
             type="LiveData&lt;Resource&lt;List&lt;CommentsItem>>>" />
 

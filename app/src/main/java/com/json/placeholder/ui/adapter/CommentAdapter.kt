@@ -1,12 +1,14 @@
 package com.json.placeholder.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.json.placeholder.R
 import com.json.placeholder.data.CommentsItem
 import com.json.placeholder.databinding.ItemCommentBinding
 import com.json.placeholder.ui.base.BaseAdapter
+import com.source.module.app.AppExecutors
 
 /**
  *
@@ -14,7 +16,8 @@ import com.json.placeholder.ui.base.BaseAdapter
  * @since 2021.04.24
  *
  */
-class CommentAdapter : BaseAdapter<ItemCommentBinding, CommentsItem, CommentAdapter.ViewHolder>() {
+class CommentAdapter(appExecutors: AppExecutors) : BaseAdapter<ItemCommentBinding, CommentsItem, CommentAdapter.ViewHolder>(
+        appExecutors, COMMENT_COMPARATOR) {
 
     override fun getLayoutId(viewType: Int): Int {
         return R.layout.item_comment
@@ -33,4 +36,15 @@ class CommentAdapter : BaseAdapter<ItemCommentBinding, CommentsItem, CommentAdap
      * @param binding item binding
      */
     class ViewHolder(binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root)
+
+    companion object {
+        val COMMENT_COMPARATOR = object : DiffUtil.ItemCallback<CommentsItem>() {
+            override fun areItemsTheSame(oldItem: CommentsItem, newItem: CommentsItem) =
+                    oldItem.id == newItem.id
+
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: CommentsItem, newItem: CommentsItem) =
+                    oldItem == newItem
+        }
+    }
 }

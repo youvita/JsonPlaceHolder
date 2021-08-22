@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_spacing_small">4dp</dimen>
+    <dimen name="default_spacing_2dp">2dp</dimen>
+    <dimen name="default_spacing_4dp">4dp</dimen>
+    <dimen name="default_spacing_8dp">8dp</dimen>
 </resources>

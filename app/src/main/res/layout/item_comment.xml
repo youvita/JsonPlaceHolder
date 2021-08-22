@@ -35,7 +35,7 @@
                 android:id="@+id/tvEmailValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.email}"
+                android:text="@{viewModel.postId.toString()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvCommentValue"
                 app:layout_constraintTop_toTopOf="parent"

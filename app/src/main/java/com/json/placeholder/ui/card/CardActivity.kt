@@ -61,6 +61,9 @@ class CardActivity: BaseActivity<ActivityCardviewBinding>() {
         binding.rvHotel.removeItemDecoration(itemOffsetDecoration)
         binding.rvHotel.addItemDecoration(itemOffsetDecoration)
         cardScaleHelper.attachToRecyclerView(binding.rvHotel)
+        cardScaleHelper.setScale(1f)
+//        cardScaleHelper.setPagePadding(0)
+//        cardScaleHelper.setShowLeftCardWidth(0)
 
         commentAdapter.submitList(list)
 

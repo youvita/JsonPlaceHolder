@@ -20,6 +20,8 @@ versions.version_coroutines = "1.3.0"
 versions.version_lifecycle = "2.2.0-rc03"
 versions.version_rxjava2 = "2.2.7"
 versions.version_paging = "2.1.2"
+versions.version_room = "2.3.0"
+versions.version_shimmer = "0.5.0"
 ext.versions = versions
 
 def dagger = [:]
@@ -55,6 +57,12 @@ lifecycle.viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.
 lifecycle.livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.version_lifecycle"
 deps.lifecycle = lifecycle
 
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.version_room"
+room.compiler = "androidx.room:room-compiler:$versions.version_room"
+room.room_ktx = "androidx.room:room-ktx:$versions.version_room"
+deps.room = room
+
 def support = [:]
 support.activity_ktx = "androidx.activity:activity-ktx:$versions.version_activity"
 support.fragment_ktx = "androidx.fragment:fragment-ktx:$versions.version_fragment"
@@ -68,6 +76,7 @@ deps.material = "com.google.android.material:material:$versions.version_material
 deps.constraintlayout = "androidx.constraintlayout:constraintlayout:$versions.version_constraintlayout"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.version_rxjava2"
 deps.paging_ktx = "androidx.paging:paging-runtime-ktx:$versions.version_paging"
+deps.shimmer = "com.facebook.shimmer:shimmer:$versions.version_shimmer"
 
 ext.deps = deps
 

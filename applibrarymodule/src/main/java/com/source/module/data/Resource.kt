@@ -19,11 +19,8 @@ sealed class Resource<out T>(
    ) : Resource<T>(SUCCESS, resource, null, null, null)
 
    data class Error<out T>(
-      private val msgTitle: Int,
-      private val msgDes: Any,
-      private val code: Int? = null,
       private val resource: T? = null
-   ) : Resource<T>(ERROR, resource, msgTitle, msgDes, code)
+   ) : Resource<T>(ERROR, resource, null, null, null)
 
    data class Unauthorized<out T>(
       private val msgTitle: Int,
