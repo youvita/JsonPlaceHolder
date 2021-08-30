@@ -9,10 +9,11 @@
         android:background="@color/colorGray808080">
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginStart="21dp"
             android:layout_marginEnd="21dp"
+            android:layout_marginStart="21dp"
             android:background="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/rvHotel"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +33,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:itemCount="2"
             tools:listitem="@layout/item_comment" />
+
+        <com.source.module.custom.DotsIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dotsColor="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

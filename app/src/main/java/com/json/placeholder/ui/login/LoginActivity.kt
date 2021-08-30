@@ -83,8 +83,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
      */
     private fun loginRequest() {
         loginViewModel.login.observe(this) {
-            item.name = "Daaaaaammmmmmm"
-            Log.d(">>>>", "${item.name}")
+//            item.name = "Daaaaaammmmmmm"
+//            Log.d(">>>>", "${item.name}")
             if (it) {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)

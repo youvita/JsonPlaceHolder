@@ -27,7 +27,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providePassengerService(retrofit: Retrofit.Builder): PassengerApi {
-        return retrofit.build().create(PassengerApi::class.java)
+        return retrofit.baseUrl(Constants.BASE_URL).build().create(PassengerApi::class.java)
     }
 
     @Singleton

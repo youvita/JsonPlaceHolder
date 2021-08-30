@@ -34,36 +34,48 @@ class CardActivity: BaseActivity<ActivityCardviewBinding>() {
         val list = mutableListOf<CommentsItem>()
 
         val item = CommentsItem()
-        item.postId = 1
-        item.id = 1
-        item.name = "Dara"
-        item.email = "Dara@gmail"
-        item.body = "Dara Kun"
-        list.add(0, item)
+        for (i in 0..10) {
+            item.postId = i
+            item.id = i
+            item.name = "Dara"
+            item.email = "Dara@gmail"
+            item.body = "Dara Kun"
+            list.add(item)
+        }
+//        val item = CommentsItem()
+//        item.postId = 1
+//        item.id = 1
+//        item.name = "Dara"
+//        item.email = "Dara@gmail"
+//        item.body = "Dara Kun"
+//        list.add(0, item)
 
-        val item1 = CommentsItem()
-        item1.postId = 2
-        item1.id = 2
-        item1.name = "Sokra"
-        item1.email = "Sokra@gmail"
-        item1.body = "Sokra Kun"
-        list.add(1, item1)
-
-        val item2 = CommentsItem()
-        item2.postId = 3
-        item2.id = 3
-        item2.name = "Sokra"
-        item2.email = "Sokra@gmail"
-        item2.body = "Sokra Kun"
-        list.add(2, item2)
+//        val item1 = CommentsItem()
+//        item1.postId = 2
+//        item1.id = 2
+//        item1.name = "Sokra"
+//        item1.email = "Sokra@gmail"
+//        item1.body = "Sokra Kun"
+//        list.add(1, item1)
+//
+//        val item2 = CommentsItem()
+//        item2.postId = 3
+//        item2.id = 3
+//        item2.name = "Sokra"
+//        item2.email = "Sokra@gmail"
+//        item2.body = "Sokra Kun"
+//        list.add(2, item2)
 
         binding.rvHotel.adapter = commentAdapter
         binding.rvHotel.removeItemDecoration(itemOffsetDecoration)
         binding.rvHotel.addItemDecoration(itemOffsetDecoration)
         cardScaleHelper.attachToRecyclerView(binding.rvHotel)
-        cardScaleHelper.setScale(1f)
+        cardScaleHelper.setScale(0.95f)
 //        cardScaleHelper.setPagePadding(0)
 //        cardScaleHelper.setShowLeftCardWidth(0)
+
+        binding.indicator.setDotCount(commentAdapter.itemCount)
+        binding.indicator.setViewPager(binding.rvHotel)
 
         commentAdapter.submitList(list)
 

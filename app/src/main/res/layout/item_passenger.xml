@@ -4,11 +4,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.json.placeholder.data.CommentsItem"/>
+        <import type="com.json.placeholder.data.PassengerItem"/>
 
         <variable
             name="viewModel"
-            type="CommentsItem" />
+            type="PassengerItem" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -35,7 +35,7 @@
                 android:id="@+id/tvEmailValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.postId.toString()}"
+                android:text="@{viewModel.id.toString()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvCommentValue"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="@{viewModel.body}"
+                android:text="@{viewModel.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvComment"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmailValue"

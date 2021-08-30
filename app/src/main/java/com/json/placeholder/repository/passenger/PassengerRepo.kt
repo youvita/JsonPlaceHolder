@@ -7,14 +7,13 @@ import androidx.paging.PagedList
 import com.json.placeholder.data.PassengerItem
 import com.json.placeholder.data.api.PassengerApi
 import com.source.module.data.Listing
+import com.source.module.data.Resource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
-class PassengerRepo(private val passengerApi: PassengerApi,private val pageListConfig: PagedList.Config) {
+class PassengerRepo(private val passengerApi: PassengerApi, private val pageListConfig: PagedList.Config) {
 
-    suspend fun loadPassenger(
-        scope: CoroutineScope
-    ): Listing<PassengerItem> {
+    fun loadPassenger(scope: CoroutineScope): Listing<PassengerItem> {
         val sourceFactory = PassengerDataSourceFactory(scope, passengerApi)
 
         val livePagedList: LiveData<PagedList<PassengerItem>> =
@@ -30,5 +29,9 @@ class PassengerRepo(private val passengerApi: PassengerApi,private val pageListC
         )
     }
 
-    fun loadPassenger(){}
+
+    suspend fun loadPassenger()
+    {
+        passengerApi.getPassenger(10, 1)
+    }
 }
