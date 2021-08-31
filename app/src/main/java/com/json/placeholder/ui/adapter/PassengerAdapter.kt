@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.json.placeholder.R
 import com.json.placeholder.data.PassengerItem
 import com.json.placeholder.databinding.ItemPassengerBinding
-import com.json.placeholder.ui.base.BasePageAdapter
+import com.json.placeholder.ui.base.BaseAdapter
+//import com.json.placeholder.ui.base.BasePageAdapter
 import com.source.module.app.AppExecutors
 
 /**
@@ -16,7 +17,7 @@ import com.source.module.app.AppExecutors
  * @since 2021.04.24
  *
  */
-class PassengerAdapter(appExecutors: AppExecutors) : BasePageAdapter<ItemPassengerBinding, PassengerItem, PassengerAdapter.ViewHolder>(
+class PassengerAdapter(appExecutors: AppExecutors) : BaseAdapter<ItemPassengerBinding, PassengerItem, PassengerAdapter.ViewHolder>(
         appExecutors, COMMENT_COMPARATOR) {
 
     override fun getLayoutId(viewType: Int): Int {
@@ -50,7 +51,11 @@ class PassengerAdapter(appExecutors: AppExecutors) : BasePageAdapter<ItemPasseng
         }
     }
 
-    override fun setBindData(holder: ViewHolder, data: PassengerItem?, position: Int) {
-        holder.bindingItem(data)
+    override fun setBindData(holder: ViewHolder, data: PassengerItem, position: Int) {
+        TODO("Not yet implemented")
     }
+
+//    override fun setBindData(holder: ViewHolder, data: PassengerItem?, position: Int) {
+//        holder.bindingItem(data)
+//    }
 }

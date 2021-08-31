@@ -3,6 +3,8 @@ package com.json.placeholder.ui.main
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.json.placeholder.R
 import com.json.placeholder.databinding.ActivityMainBinding
@@ -17,6 +19,9 @@ import dagger.Component
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -36,8 +41,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @Inject
     lateinit var passengerAdapter: PassengerAdapter
 
+
     override fun getLayoutId(): Int = R.layout.activity_main
 
+    @ExperimentalPagingApi
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,20 +81,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 //        viewModel.comments.observe(this@MainActivity) { comments ->
 ////            if (comments is Resource.Success) {
-//                commentAdapter.submitList(comments.data as MutableList<CommentsItem>?)
-//                binding.itemCount = commentAdapter.itemCount
+////                commentAdapter.submitList(comments.data as MutableList<CommentsItem>?)
+////                binding.itemCount = commentAdapter.itemCount
 //                viewModel.cancelRequests()
 ////            }
 //        }
     }
 
     @ExperimentalCoroutinesApi
+    @ExperimentalPagingApi
     private fun getPassengerList() {
         binding.rvComment.adapter = passengerAdapter
-        viewModel.passenger
-        viewModel.dataPassenger.observe(this@MainActivity) {
 
-        }
+        viewModel.getPassenger()
+//        viewModel.dataPassenger.observe(this@MainActivity) {
+//
+//        }
     }
 
     override fun onDestroy() {

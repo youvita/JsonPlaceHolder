@@ -11,5 +11,5 @@ open class PagingResponse<T> {
     var pages: Int? = null
 
     @SerializedName("data")
-    var datas: MutableList<T>? = null
+    var datas: List<T>? = null
 }

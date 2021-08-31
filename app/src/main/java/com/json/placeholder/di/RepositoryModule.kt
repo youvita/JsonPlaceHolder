@@ -34,17 +34,8 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providePageListConfigBuilder(): PagedList.Config = PagedList.Config.Builder()
-        .setPageSize(10)
-        .setInitialLoadSizeHint(10)
-        .setPrefetchDistance(10)
-        .setEnablePlaceholders(false)
-        .build()
-
-    @Singleton
-    @Provides
-    fun providePassengerRepo(passengerApi: PassengerApi, pagedListConfig: PagedList.Config) : PassengerRepo {
-        return PassengerRepo(passengerApi, pagedListConfig)
+    fun providePassengerRepo(passengerApi: PassengerApi) : PassengerRepo {
+        return PassengerRepo(passengerApi)
     }
 
 
