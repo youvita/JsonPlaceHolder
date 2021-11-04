@@ -6,7 +6,7 @@ class LoginRepo {
      * handle verify login
      */
     fun checkValidLogin(email: String, password: String) : Boolean {
-        if (email == "vita@gmail.com" && password == "qwer1234!") {
+        if (email == "1" && password == "1") {
             return true
         }
         return false

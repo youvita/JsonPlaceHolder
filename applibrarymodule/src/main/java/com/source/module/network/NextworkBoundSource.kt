@@ -1,15 +1,18 @@
 package com.source.module.network
 
 import com.source.module.data.Resource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import java.io.IOException
+import kotlin.contracts.Returns
 
-@ExperimentalCoroutinesApi
-fun <ResultType, RequestType> networkBoundSource(
-     query: () -> Flow<ResultType>,
-     fetch: suspend () -> RequestType,
-     saveFetchResult: suspend (RequestType) -> Unit,
-     shouldFetch: (ResultType) -> Boolean = {true}
+inline fun <ResultType, RequestType> networkBoundResource(
+    crossinline query: () -> Flow<ResultType>,
+    crossinline fetch: suspend () -> RequestType,
+    crossinline saveFetchResult: suspend (RequestType) -> Unit,
+    crossinline shouldFetch: (ResultType) -> Boolean = { true }
+
 ) = flow {
     val data = query().first()
 
@@ -18,13 +21,17 @@ fun <ResultType, RequestType> networkBoundSource(
 
         try {
             saveFetchResult(fetch())
-            query().map { Resource.Success(it)}
-        }catch (throwable: Throwable) {
-            query().map { Resource.Error(throwable) }
+            query().map { Resource.Success(it) }
+        } catch (throwable: Throwable) {
+            query().map { Resource.Error(throwable, it) }
         }
+
+//        query().retry(2) { e ->
+//            return@retry e is IOException
+//        }
+
     } else {
-        query().map { Resource.Success(it)
-        }
+        query().map { Resource.Success(it) }
     }
 
     emitAll(flow)

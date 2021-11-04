@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.map
 import androidx.paging.ExperimentalPagingApi
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.json.placeholder.R
+import com.json.placeholder.data.CommentsItem
 import com.json.placeholder.databinding.ActivityMainBinding
 import com.json.placeholder.ui.base.BaseActivity
 import com.json.placeholder.ui.adapter.CommentAdapter
@@ -20,7 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -53,7 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        binding.viewModel = viewModel
         
 
-        getPassengerList()
+//        getPassengerList()
 
         commentDisposable = RxJava.listen(RxEvent.CommentSuccess::class.java).subscribe {
             Log.d(">>>>","Result::: ${it.value}")
@@ -68,8 +73,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.rvComment.adapter = commentAdapter
 //        viewModel.getComments()
 
-//        binding.viewModel = viewModel
-//        viewModel.comments.observe(this) {
+////        binding.viewModel = viewModel
+//        viewModel.comments.map {
+////            Log.d(">>>>>","${it.data}")
+//            commentAdapter.submitList(it.data)
+//            binding.itemCount = commentAdapter.itemCount
+//        }
+//        (this) {
 //            if (it.data.isNullOrEmpty()) return@observe
 //            Log.d(">>>>", "result:: ${viewModel.comments.value?.status}")
 //            if (it is Resource.Success) {
@@ -79,13 +89,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //            }
 //        }
 
-//        viewModel.comments.observe(this@MainActivity) { comments ->
-////            if (comments is Resource.Success) {
-////                commentAdapter.submitList(comments.data as MutableList<CommentsItem>?)
-////                binding.itemCount = commentAdapter.itemCount
-//                viewModel.cancelRequests()
-////            }
-//        }
+        viewModel.comments.observe(this@MainActivity) { comments ->
+            Log.d(">>>>", "result:: ${comments.status}")
+//            if (comments is Resource.Success) {
+                commentAdapter.submitList(comments.data)
+                binding.itemCount = commentAdapter.itemCount
+                viewModel.cancelRequests()
+//            }
+        }
     }
 
     @ExperimentalCoroutinesApi
@@ -109,7 +120,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
 
-//        getCommentList()
+        getCommentList()
 
 //        if (commentAdapter.itemCount < 0) {
 //            shimmerFrameLayout = binding.shimmer

@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(private val commentRepo: CommentRepo, pr
 //    }
 
     @ExperimentalCoroutinesApi
-//    val comments = commentRepo.getCommentBound().asLiveData()
+    val comments = commentRepo.getCommentBound().asLiveData()
 
 //    private val _options = MutableLiveData<HashMap<String, String?>>()
 

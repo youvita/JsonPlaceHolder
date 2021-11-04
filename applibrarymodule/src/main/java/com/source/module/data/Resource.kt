@@ -2,30 +2,13 @@ package com.source.module.data
 
 import com.source.module.data.Status.*
 
-sealed class Resource<out T>(
-   val status: Status,
-   val data: T?,
-   val messageTitle: Int?,
-   val messageDes: Any?,
-   val errorCode: Int?,
+sealed class Resource<T>(
+   val status: Status? = null,
+   val data: T? = null,
+   val error: Throwable? = null
 ) {
 
-   data class Loading<out T>(
-      private val resource: T? = null
-   ) : Resource<T>(LOADING, resource, null, null, null)
-
-   data class Success<out T>(
-      private val resource: T?,
-   ) : Resource<T>(SUCCESS, resource, null, null, null)
-
-   data class Error<out T>(
-      private val resource: T? = null
-   ) : Resource<T>(ERROR, resource, null, null, null)
-
-   data class Unauthorized<out T>(
-      private val msgTitle: Int,
-      private val msgDes: Int,
-      private val resource: T? = null
-   ) : Resource<T>(ERROR, resource, msgTitle, msgDes, null)
-
+   class Success<T>(data: T) : Resource<T>(SUCCESS, data)
+   class Loading<T>(data: T? = null) : Resource<T>(LOADING, data)
+   class Error<T>(throwable: Throwable, data: T? = null) : Resource<T>(ERROR, data, throwable)
 }
