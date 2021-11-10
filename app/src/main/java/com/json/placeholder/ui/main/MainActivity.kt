@@ -1,8 +1,10 @@
 package com.json.placeholder.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import androidx.paging.ExperimentalPagingApi
@@ -22,10 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -89,14 +88,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //            }
 //        }
 
-        viewModel.comments.observe(this@MainActivity) { comments ->
-            Log.d(">>>>", "result:: ${comments.status}")
-//            if (comments is Resource.Success) {
-                commentAdapter.submitList(comments.data)
-                binding.itemCount = commentAdapter.itemCount
-                viewModel.cancelRequests()
-//            }
+        // state flow
+        lifecycleScope.launch {
+            viewModel.comments.collect { comments ->
+                Log.d(">>>","state::: ${comments.status}")
+                Log.d(">>>","data::: ${comments.error}")
+
+                if (!comments.data.isNullOrEmpty()) {
+                    commentAdapter.submitList(comments.data)
+                    binding.itemCount = commentAdapter.itemCount
+                }
+            }
         }
+
+        // live data
+//        viewModel.comments.observe(this@MainActivity) { comments ->
+//            Log.d(">>>>", "result:: ${comments.status}")
+////            if (comments is Resource.Success) {
+//                commentAdapter.submitList(comments.data)
+//                binding.itemCount = commentAdapter.itemCount
+//                viewModel.cancelRequests()
+////            }
+//        }
     }
 
     @ExperimentalCoroutinesApi

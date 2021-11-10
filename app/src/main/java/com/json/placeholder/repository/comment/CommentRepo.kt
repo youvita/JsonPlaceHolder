@@ -18,21 +18,6 @@ class CommentRepo(private val api: CommentApi, private val db: AppDataBase) {
 
     private val commentDao = db.commentDao()
 
-//    fun getComments(): Flow<Resource<List<CommentsItem>>> = flow {
-//        delay(1000)
-//        try {
-//            val request = object: RemoteDataSource<List<CommentsItem>>() {
-//                override suspend fun createCall(): Response<List<CommentsItem>> {
-//                    return api.getComments(1)
-//                }
-//            }
-//            request.networkRequest()
-//            emit(request.asLiveData().value!!)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//    }
-
     @ExperimentalCoroutinesApi
     fun getCommentBound() = networkBoundResource(
         query = {
@@ -40,7 +25,7 @@ class CommentRepo(private val api: CommentApi, private val db: AppDataBase) {
         },
         fetch = {
             delay(2000)
-            api.getComments(2)
+            api.getComments(1)
         },
         saveFetchResult = { comment ->
             db.withTransaction {

@@ -1,5 +1,6 @@
 package com.json.placeholder.ui.main
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
@@ -10,18 +11,20 @@ import com.json.placeholder.repository.comment.CommentRepo
 import com.json.placeholder.repository.passenger.PassengerRepo
 import com.json.placeholder.ui.base.BaseViewModel
 //import com.source.module.data.Listing
-import com.source.module.data.PagingResponse
 import com.source.module.data.Resource
+import com.source.module.data.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class MainViewModel @Inject constructor(private val commentRepo: CommentRepo, private val passengerRepo: PassengerRepo) : BaseViewModel() {
+
 
 //    private val _comments: MutableLiveData<Resource<List<CommentsItem>>> = MutableLiveData()
 //    val comments: LiveData<Resource<List<CommentsItem>>> get() = _comments
@@ -37,8 +40,12 @@ class MainViewModel @Inject constructor(private val commentRepo: CommentRepo, pr
 //        }
 //    }
 
-    @ExperimentalCoroutinesApi
-    val comments = commentRepo.getCommentBound().asLiveData()
+    val comments: StateFlow<Resource<List<CommentsItem>>> = commentRepo.getCommentBound()
+            .stateIn(viewModelScope, SharingStarted.Eagerly, Resource.Loading())
+
+
+//    @ExperimentalCoroutinesApi
+//    val comments = commentRepo.getCommentBound()
 
 //    private val _options = MutableLiveData<HashMap<String, String?>>()
 

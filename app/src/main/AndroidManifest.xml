@@ -21,11 +21,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.card.CardActivity" />
 
-        <activity android:name=".ui.card.CardActivity"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

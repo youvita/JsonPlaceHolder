@@ -31,7 +31,7 @@ abstract class RemoteDataSource<T> @MainThread constructor() {
 
                     val success = "Success Comment Post"
                     RxJava.publish(RxEvent.CommentSuccess(success))
-                    setValue(Resource.Success(response.body))
+                    setValue(Resource.Success())
                 }
             }
         }

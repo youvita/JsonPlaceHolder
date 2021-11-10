@@ -8,7 +8,7 @@ sealed class Resource<T>(
    val error: Throwable? = null
 ) {
 
-   class Success<T>(data: T) : Resource<T>(SUCCESS, data)
+   class Success<T>(data: T? = null) : Resource<T>(SUCCESS, data)
    class Loading<T>(data: T? = null) : Resource<T>(LOADING, data)
-   class Error<T>(throwable: Throwable, data: T? = null) : Resource<T>(ERROR, data, throwable)
+   class Error<T>(data: T? = null, throwable: Throwable) : Resource<T>(ERROR, data, throwable)
 }
