@@ -7,33 +7,40 @@ import com.json.placeholder.data.db.AppDataBase
 import com.source.module.data.Resource
 import com.source.module.network.RemoteDataSource
 import com.source.module.network.networkBoundResource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class CommentRepo(private val api: CommentApi, private val db: AppDataBase) {
 
     private val commentDao = db.commentDao()
 
+    private val dispatcher = Dispatchers.IO
+
     @ExperimentalCoroutinesApi
-    fun getCommentBound() = networkBoundResource(
-        query = {
-            commentDao.getAllComments()
-        },
-        fetch = {
-            delay(2000)
-            api.getComments(1)
-        },
-        saveFetchResult = { comment ->
-            db.withTransaction {
-                commentDao.deleteAllComments()
-                commentDao.insertComments(comment)
-            }
-        }
-    )
+    suspend fun getCommentBound(postId: Int) = withContext(dispatcher) {
+        networkBoundResource(
+                query = {
+                    commentDao.getAllComments()
+                },
+                fetch = {
+                    delay(2000)
+                    api.getComments(postId)
+                },
+                saveFetchResult = { comment ->
+                    db.withTransaction {
+                        commentDao.deleteAllComments()
+                        commentDao.insertComments(comment)
+                    }
+                }
+        )
+    }
+
 
 //        fun loadPassenger(): Flow<List<CommentsItem>> = flow {
 //        delay(1000)

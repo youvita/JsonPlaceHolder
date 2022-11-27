@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import androidx.paging.ExperimentalPagingApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.json.placeholder.R
 import com.json.placeholder.data.CommentsItem
@@ -70,6 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @ExperimentalCoroutinesApi
     private fun getCommentList() {
         binding.rvComment.adapter = commentAdapter
+        binding.rvComment.layoutManager = LinearLayoutManager(this@MainActivity)
 //        viewModel.getComments()
 
 ////        binding.viewModel = viewModel
@@ -89,16 +91,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        }
 
         // state flow
-        lifecycleScope.launch {
-            viewModel.comments.collect { comments ->
-                Log.d(">>>","state::: ${comments.status}")
-                Log.d(">>>","data::: ${comments.error}")
+        val job = lifecycleScope.launch {
 
-                if (!comments.data.isNullOrEmpty()) {
-                    commentAdapter.submitList(comments.data)
-                    binding.itemCount = commentAdapter.itemCount
+            launch {
+                viewModel.get().collect { comments ->
+                    Log.d(">>>","state::: ${comments.status}")
+                    Log.d(">>>","data::: ${comments.data}")
+
+                    if (!comments.data.isNullOrEmpty()) {
+                        commentAdapter.submitList(comments.data)
+                        binding.itemCount = commentAdapter.itemCount
+                    }
                 }
             }
+        }
+
+        job.invokeOnCompletion {
         }
 
         // live data

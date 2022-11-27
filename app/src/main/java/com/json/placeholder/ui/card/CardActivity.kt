@@ -77,7 +77,7 @@ class CardActivity: BaseActivity<ActivityCardviewBinding>() {
         binding.indicator.setDotCount(commentAdapter.itemCount)
         binding.indicator.setViewPager(binding.rvHotel)
 
-        commentAdapter.submitList(list)
+//        commentAdapter.submitList(list)
 
 
     }
