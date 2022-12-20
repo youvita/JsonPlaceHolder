@@ -1,5 +1,6 @@
 package com.json.placeholder.ui.adapter
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,9 @@ import com.source.module.app.AppExecutors
 class CommentAdapter(appExecutors: AppExecutors) : BaseAdapter<ItemCommentBinding, CommentsItem, CommentAdapter.ViewHolder>
     (appExecutors, COMMENT_COMPARATOR){
 
+    /** comment call back function */
+    private var commentClicked: ((view: View, pos: Int) -> Unit)? = null
+
     override fun getLayoutId(viewType: Int): Int {
         return R.layout.item_comment
     }
@@ -31,10 +35,22 @@ class CommentAdapter(appExecutors: AppExecutors) : BaseAdapter<ItemCommentBindin
     }
 
     /**
+     * set comment on click listener
+     */
+    fun setCommentClickListener(commentClicked: (view: View, pos: Int) -> Unit) =
+        apply { this.commentClicked = commentClicked }
+
+    /**
      * provide a reference to the type of views that you are using custom view holder
      * @param binding item binding
      */
-    inner class ViewHolder(val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.tvComment.setOnClickListener {
+                commentClicked?.invoke(it, absoluteAdapterPosition)
+            }
+        }
+    }
 
     companion object {
         val COMMENT_COMPARATOR = object : DiffUtil.ItemCallback<CommentsItem>() {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Default-->
-    <color name="colorPrimary">#2196f3</color>
-    <color name="colorPrimaryDark">#2196f3</color>
-    <color name="colorAccent">#2196f3</color>
+    <color name="colorPrimary">#801D11</color>
+    <color name="colorPrimaryDark">#801D11</color>
+    <color name="colorAccent">#801D11</color>
 
     <!-- white -->
     <color name="colorWhite">#ffff</color>
@@ -24,5 +24,5 @@
 
     <!-- ripple -->
     <color name="colorClickRipple">#363535</color>
-
+    <color name="color_E7E6E6">#E7E6E6</color>
 </resources>

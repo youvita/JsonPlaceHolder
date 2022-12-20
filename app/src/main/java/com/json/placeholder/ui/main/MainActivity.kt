@@ -1,6 +1,7 @@
 package com.json.placeholder.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import com.json.placeholder.databinding.ActivityMainBinding
 import com.json.placeholder.ui.base.BaseActivity
 import com.json.placeholder.ui.adapter.CommentAdapter
 import com.json.placeholder.ui.adapter.PassengerAdapter
+import com.json.placeholder.ui.details.DetailsActivity
 import com.source.module.data.Resource
 import com.source.module.data.Status
 import com.source.module.rxjava.RxEvent
@@ -72,6 +74,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun getCommentList() {
         binding.rvComment.adapter = commentAdapter
         binding.rvComment.layoutManager = LinearLayoutManager(this@MainActivity)
+        commentAdapter.setCommentClickListener {_, pos ->
+            val intent = Intent(this, DetailsActivity::class.java)
+            startActivity(intent)
+        }
 //        viewModel.getComments()
 
 ////        binding.viewModel = viewModel

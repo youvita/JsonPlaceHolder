@@ -5,6 +5,7 @@
     <!-- comment -->
     <string name="comment_email">电子邮件</string>
     <string name="comment_body">评论</string>
+    <string name="comment_post">Post ID: %s</string>
 
     <!-- login -->
     <string name="user_email">电子邮件</string>

@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(private val commentRepo: CommentRepo, pr
 
 
 //    val comments: StateFlow<Resource<List<CommentsItem>>>
-        suspend fun get() = commentRepo.getCommentBound(1)
+        suspend fun get() = commentRepo.getCommentBound(2)
                 .stateIn(viewModelScope, SharingStarted.Eagerly, Resource.Loading())
 
 

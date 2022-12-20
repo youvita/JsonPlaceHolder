@@ -33,6 +33,7 @@ abstract class RemoteDataSource<T> @MainThread constructor() {
                     RxJava.publish(RxEvent.CommentSuccess(success))
                     setValue(Resource.Success())
                 }
+                else -> {}
             }
         }
     }

@@ -5,6 +5,7 @@
     <!-- comment -->
     <string name="comment_email">Email</string>
     <string name="comment_body">Comment</string>
+    <string name="comment_post">Post ID: %s</string>
 
     <!-- login -->
     <string name="user_email">Email</string>

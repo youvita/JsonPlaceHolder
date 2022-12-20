@@ -84,7 +84,7 @@ abstract class BaseBottomSheetDialog<B: ViewDataBinding>: BottomSheetDialogFragm
      * Setting height bottom sheet dialog to full screen
      */
     fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
-        val bottomSheet = bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout?
+        val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
         val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<FrameLayout?>(requireNotNull(bottomSheet))
         val layoutParams = bottomSheet?.layoutParams
         val windowHeight = getWindowHeight()
