@@ -3,8 +3,11 @@ package com.json.placeholder.ui.details
 import android.os.Bundle
 import android.view.MenuItem
 import com.json.placeholder.R
+import com.json.placeholder.app.Constants
+import com.json.placeholder.data.CommentsItem
 import com.json.placeholder.databinding.ActivityDetailsBinding
 import com.json.placeholder.ui.base.BaseActivity
+import com.source.module.app.parcelable
 
 class DetailsActivity: BaseActivity<ActivityDetailsBinding>() {
 
@@ -17,6 +20,9 @@ class DetailsActivity: BaseActivity<ActivityDetailsBinding>() {
         setSupportActionBar(binding.topAppBar)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_left)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val commentsItem = intent.parcelable<CommentsItem>(Constants.COMMENTS_ITEM_KEY)
+        binding.viewModel = commentsItem
     }
 
     @Override

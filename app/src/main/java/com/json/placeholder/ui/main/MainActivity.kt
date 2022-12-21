@@ -1,35 +1,26 @@
 package com.json.placeholder.ui.main
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.map
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.json.placeholder.R
-import com.json.placeholder.data.CommentsItem
+import com.json.placeholder.app.Constants
 import com.json.placeholder.databinding.ActivityMainBinding
 import com.json.placeholder.ui.base.BaseActivity
 import com.json.placeholder.ui.adapter.CommentAdapter
 import com.json.placeholder.ui.adapter.PassengerAdapter
 import com.json.placeholder.ui.details.DetailsActivity
-import com.source.module.data.Resource
-import com.source.module.data.Status
 import com.source.module.rxjava.RxEvent
 import com.source.module.rxjava.RxJava
-import dagger.Component
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -76,6 +67,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.rvComment.layoutManager = LinearLayoutManager(this@MainActivity)
         commentAdapter.setCommentClickListener {_, pos ->
             val intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(Constants.COMMENTS_ITEM_KEY, commentAdapter.currentList[pos])
             startActivity(intent)
         }
 //        viewModel.getComments()

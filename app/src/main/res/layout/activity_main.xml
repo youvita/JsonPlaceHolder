@@ -36,11 +36,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="Comment"/>
+                android:layout_height="?attr/actionBarSize"
+                app:titleCentered="true"
+                app:title="Comments" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
